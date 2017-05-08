@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Registration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+  </head>
+  <body>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="/" class="brand-logo">Algorithm Progress Tracker</a>
+        <ul class="right hide-on-med-and-down">
+          <li class="active"><a href="/register">Register</a></li>
+          <li class="active"><a href="/login">Log In</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="row">
+    <form class="col s12" action="/dashboard" method="POST">
+      {% csrf_token %}
+      <div class="row">
+        <div class="input-field col s3">
+          <input id="first_name" type="text" class="validate" name="first_name">
+          <label for="first_name">First Name</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s3">
+          <input id="last_name" type="text" class="validate" name="last_name">
+          <label for="last_name">Last Name</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s3">
+          <input id="email" type="email" class="validate" name="email">
+          <label for="email">Email</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s3">
+          <input id="password" type="password" class="validate" name="password">
+          <label for="password">Password</label>
+        </div>
+      </div>
+      <button class="btn waves-effect waves-light" type="submit">Register
+      </button>
+    </form>
+  </div>
+
+
+  </body>
+</html>
