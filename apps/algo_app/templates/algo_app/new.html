@@ -11,13 +11,37 @@
         <a class="brand-logo">New Problem</a>
         <ul class="right hide-on-med-and-down">
           <li><a href="/dashboard">Dashboard</a></li>
+          <li><a href="/all">All Problems</a></li>
           <li><a href="/new">New Problem</a></li>
           <li><a href="/popular">Polular Problems</a></li>
           <li><a href="/events">Events</a></li>
           <li><a href="/resources">Resources</a></li>
-          <li class="active"><a href="/logout">Log Out</a></li>
+          <li><a href="/logout">Log Out</a></li>
         </ul>
       </div>
     </nav>
+
+    <div class="row">
+      <form class="col s12" action="/new_problem" method="POST">
+        {% csrf_token %}
+        <div class="row">
+          <div class="input-field col s4">
+            <input id="prob_name" type="text" class="validate" name="prob_name" placeholder="Problem Name">
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s4">
+            <input id="prob_category" type="text" class="validate" name="prob_category" placeholder="Problem Category">
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s4">
+            <input id="statement" type="text" class="validate" name="statement" placeholder="Please enter the full problem statement here...">
+          </div>
+        </div>
+        <button class="btn waves-effect waves-light" type="submit">Submit Problem</button>
+      </form>
+
+   </div>
   </body>
 </html>

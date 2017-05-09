@@ -3,12 +3,16 @@ from . import views
 urlpatterns = [
     url(r'^$', views.index),
     url(r'^register$', views.register),
+    url(r'^registered$', views.registered),
     url(r'^login$', views.login),
+    url(r'^loggedIn$', views.loggedIn),
+    url(r'^logout$', views.logout),
     url(r'^dashboard$', views.dashboard),
+    url(r'^all$', views.all),
     url(r'^new$', views.new),
+    url(r'^popular$', views.popular),
     url(r'^events$', views.events),
     url(r'^resources$', views.resources),
-    url(r'^logout$', views.logout),
 ]
 
 # urlpatterns = [
