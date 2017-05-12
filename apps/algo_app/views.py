@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
-from .models import User
+from .models import User, Problem, Type, Source
 
 
 # log in and registration
@@ -21,6 +21,7 @@ def registered(request):
         if result[0] == False:
             for error in result[1]:
                 messages.add_message(request, messages.INFO, error)
+                return redirect('/register')
         else:
             request.session['first_name']= result[1].first_name
             request.session['id'] = result[1].id
@@ -39,6 +40,7 @@ def loggedIn(request):
         if result[0] == False:
             for error in result[1]:
                 messages.add_message(request, messages.INFO, error)
+                return redirect('/login')
         else:
             request.session['first_name']= result[1].first_name
             request.session['id'] = result[1].id
@@ -82,3 +84,9 @@ def resources(request):
     if "id" in request.session:
         return render(request, "algo_app/resources.html")
     return redirect('/')
+
+
+#operation
+def add_problem(request):
+    if request.method == "POST":
+        new_problem = Problem.objects.addProblem(request.POST)

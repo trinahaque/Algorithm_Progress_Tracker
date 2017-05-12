@@ -87,6 +87,45 @@ class UserManager(models.Manager):
         return False, login_messages
 
 
+class ProblemManager(models.Manager):
+    def addProblem(self, POST):
+        prob_type = POST['prob_type']
+        prob_name = POST['prob_name'].lower()
+        prob_statement = POST['prob_statement']
+        # prob_statement = POST.get('prob_statement')
+        prob_support = POST['prob_support']
+        # prob_comment = POST.get('comment')
+        prob_sources = POST['prob_sources']
+        # print prob_sources
+
+        data_type = Type.objects.get(data_type=prob_type)
+
+
+class EventManager(models.Manager):
+    def addEvent(self, POST, id):
+        event_name = POST['event_name'].lower()
+        event_date = POST['event_date']
+        event_time = POST['event_time']
+        event_location = POST['event_location'].lower()
+        event_comment = POST['event_comment']
+        errors = []
+
+        valid = True
+        if len(event_name) < 1 or len(event_date) < 1 or len(event_time) < 1 or len(event_location) < 1 or len(event_comment) < 1:
+            errors.append("A field can not be empty")
+            valid = False
+
+        if event_date < unicode(datetime.today().date()):
+            errors.append("Can not add past events")
+            valid = False
+
+        if valid:
+            user = User.objects.get(id=id)
+            event = Event.objects.create(user=user, event_name=event_name, event_date=event_date, event_time=event_time, event_location=event_location)
+            return (True, event)
+        return (False, errors)
+
+
 class User(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
@@ -95,3 +134,39 @@ class User(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = UserManager()
+
+
+class Type(models.Model):
+    data_type = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+class Source(models.Model):
+    prob_source = models.CharField(max_length=255)
+    # created_at = models.DateTimeField(auto_now_add = True)
+    # updated_at = models.DateTimeField(auto_now=True)
+
+
+class Problem(models.Model):
+    prob_type = models.ForeignKey(Type)
+    prob_name = models.TextField(max_length=1000)
+    prob_statement = models.TextField(max_length=1000)
+    prob_support = models.TextField(max_length=1000)
+    prob_comment = models.TextField(max_length=1000)
+    prob_sources = models.ManyToManyField(Source)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now=True)
+    objects = ProblemManager()
+
+
+class Event(models.Model):
+    user = models.ForeignKey(User)
+    event_name = models.CharField(max_length=255)
+    event_date = models.CharField(max_length=255)
+    event_time = models.CharField(max_length=255)
+    event_location = models.TextField(max_length=1000)
+    event_comment = models.TextField(max_length=1000)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now=True)
+    objects = EventManager()

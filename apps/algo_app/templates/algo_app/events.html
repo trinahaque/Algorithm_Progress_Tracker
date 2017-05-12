@@ -20,5 +20,51 @@
         </ul>
       </div>
     </nav>
+    <div class="row">
+
+      <div class="col s8">
+        <h5>Events This Week </h5>
+
+      </div>
+
+      <div class="col s4">
+        <h5 class="title">Add A New Event</h5>
+        <div class="row">
+          <form class="col s6" action="/add_event" method="POST">
+            {% csrf_token %}
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="event_name" type="text" class="validate" name="event_name" placeholder="Event Name">
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="event_date" type="date" class="validate" name="event_date" placeholder="Event Date">
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="event_time" type="time" class="validate" name="event_time" placeholder="Event Time">
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="event_location" type="text" class="validate" name="event_location" placeholder="Event Location">
+              </div>
+            </div>
+            <div class="row">
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="event_comment" class="materialize-textarea" name="event_comment" placeholder="Event link or comment"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <button class="btn waves-effect waves-light" type="submit">Submit Problem</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

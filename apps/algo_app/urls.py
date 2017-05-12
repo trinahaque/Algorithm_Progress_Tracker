@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^dashboard$', views.dashboard),
     url(r'^all$', views.all),
     url(r'^new$', views.new),
+    url(r'^add_problem$', views.add_problem),
     url(r'^popular$', views.popular),
     url(r'^events$', views.events),
     url(r'^resources$', views.resources),

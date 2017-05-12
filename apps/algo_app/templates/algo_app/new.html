@@ -22,7 +22,7 @@
     </nav>
 
     <div class="row">
-      <form class="col s12" action="/new_problem" method="POST">
+      <form class="col s12" action="/add_problem" method="POST">
         {% csrf_token %}
         <div class="row">
           <div class="input-field col s4">
@@ -30,18 +30,54 @@
           </div>
         </div>
         <div class="row">
+          <form class="col s4">
+            <div class="row">
+              <div class="input-field col s4">
+                <textarea id="prob_statement" class="materialize-textarea" name="prob_statement" placeholder="Please enter the full problem statement here..."></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="row">
           <div class="input-field col s4">
-            <input id="prob_category" type="text" class="validate" name="prob_category" placeholder="Problem Category">
+            <select id="prob_type" type="text" class="dropdown-button btn" name="prob_type" placeholder="Problem Type">
+              <option class="validate" value="array">Array</option>
+              <option class="validate" value="strings">Strings</option>
+              <option class="validate" value="linkedlist">Linked List</option>
+              <option class="validate" value="recursion">Recursion</option>
+              <option class="validate" value="sort">Sort</option>
+              <option class="validate" value="heap">Heap</option>
+              <option class="validate" value="bst">Binary Search Tree</option>
+              <option class="validate" value="trie">Trie</option>
+              <option class="validate" value="hashmap">HashMap</option>
+              <option class="validate" value="graph">Graph</option>
+            </select>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s4">
-            <input id="statement" type="text" class="validate" name="statement" placeholder="Please enter the full problem statement here...">
+            <p class="text">Select sources of the problem below. You can select multiple options</p>
+            <select multiple id="prob_sources" type="text" class="dropdown-button btn" name="prob_sources" placeholder="Source(s) of the problem">
+              <option class="validate" value="dojo">Dojo</option>
+              <option class="validate" value="ctci">CTCI</option>
+              <option class="validate" value="leetcode">Leetcode</option>
+              <option class="validate" value="wwc">WWC</option>
+              <option class="validate" value="other">Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s4">
+            <input id="prob_support" type="text" class="validate" name="prob_support" placeholder="Please enter supporting materials here (optional)">
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s4">
+            <input id="prob_comment" type="text" class="validate" name="prob_comment" placeholder="Comment (optional)">
           </div>
         </div>
         <button class="btn waves-effect waves-light" type="submit">Submit Problem</button>
       </form>
-
    </div>
   </body>
 </html>
