@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
-from .models import User, Problem, Type, Source
+from .models import User, Problem, Type, Source, Event
 
 
 # log in and registration
@@ -90,3 +90,13 @@ def resources(request):
 def add_problem(request):
     if request.method == "POST":
         new_problem = Problem.objects.addProblem(request.POST)
+    return redirect('/')
+
+def add_event(request):
+    if request.method == "POST":
+        event = Event.objects.addEvent(request.POST, request.session['id'])
+        if event[0] == False:
+            for error in event[1]:
+                messages.add_message(request, messages.INFO, error)
+        return redirect('/events')
+    return redirect('/')
