@@ -1,6 +1,11 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
 from .models import User, Problem, Type, Source, Event
+from django.db.models import Q
+import datetime
+from datetime import date
+from django.utils.timezone import localtime, now
+# this imports local time
 
 
 # log in and registration
@@ -77,8 +82,32 @@ def popular(request):
 
 def events(request):
     if "id" in request.session:
-        return render(request, "algo_app/events.html")
+        today = localtime(now()).date()
+        start_week = today - datetime.timedelta(days=0)
+        end_week = today + datetime.timedelta(days=7)
+        events = Event.objects.filter(event_date__range=(start_week, end_week)).order_by('event_date')
+        upcoming = Event.objects.filter(Q(event_date__gte=end_week)).order_by('event_date')
+
+        context = {
+            "events":events,
+            "start_week":start_week,
+            "end_week": end_week,
+            "upcoming":upcoming
+        }
+        return render(request, "algo_app/events.html", context)
     return redirect('/')
+
+def event(request, id):
+    if "id" in request.session:
+        print request.session['id']
+        event = Event.objects.filter(user_id=request.session['id'], id=id)
+        print event[0]
+        context = {
+            "event": event[0]
+        }
+        return render(request, "algo_app/event.html", context)
+    # return redirect('/')
+
 
 def resources(request):
     if "id" in request.session:

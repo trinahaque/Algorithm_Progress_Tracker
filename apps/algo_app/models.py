@@ -121,7 +121,7 @@ class EventManager(models.Manager):
 
         if valid:
             user = User.objects.get(id=id)
-            event = Event.objects.create(user=user, event_name=event_name, event_date=event_date, event_time=event_time, event_location=event_location)
+            event = Event.objects.create(user=user, event_name=event_name, event_date=event_date, event_time=event_time, event_location=event_location, event_comment=event_comment)
             return (True, event)
         return (False, errors)
 

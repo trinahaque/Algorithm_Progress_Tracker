@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <title>{{event.event_name|title}}</title>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-wrapper">
+        <a class="brand-logo">{{event.event_name|title}}</a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="/dashboard">Dashboard</a></li>
+          <li><a href="/all">All Problems</a></li>
+          <li><a href="/new">New Problem</a></li>
+          <li><a href="/popular">Polular Problems</a></li>
+          <li><a href="/resources">Resources</a></li>
+          <li><a href="/events">Events</a></li>
+          <li><a href="/logout">Log Out</a></li>
+        </ul>
+      </div>
+    </nav>
+    <form class="col s12" action="/add_event" method="POST">
+      {% csrf_token %}
+      <div class="row">
+        <div class="input-field col s4">
+          <input id="event_name" type="text" class="validate" name="event_name" value="{{event.event_name|title}}">
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s4">
+          <input id="event_date" type="date" class="validate" name="event_date" value="{{event.event_date}}">
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s4">
+          <input id="event_time" type="time" class="validate" name="event_time" value="{{event.event_time}}">
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s4">
+          <input id="event_location" type="text" class="validate" name="event_location" value="{{event.event_location|title}}">
+        </div>
+      </div>
+      <div class="row">
+        <div class="row">
+          <div class="input-field col s4">
+            <textarea id="event_comment" class="materialize-textarea" name="event_comment" value="{{event.event_comment}}"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <button class="btn waves-effect waves-light" type="submit">Update</button>
+      </div>
+    </form>
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags}}" {% endif %}>{{ message }}
+    </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </body>
+</html>
