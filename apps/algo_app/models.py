@@ -125,6 +125,29 @@ class EventManager(models.Manager):
             return (True, event)
         return (False, errors)
 
+    def update_event(self, POST, user_id, event_id):
+        event_name = POST['event_name']
+        event_date = POST['event_date']
+        event_time = POST['event_time']
+        event_location = POST['event_location']
+        event_comment = POST['event_comment']
+        errors = []
+
+        valid = True
+        if len(event_name) < 1 or len(event_date) < 1 or len(event_location) < 1 or len(event_time) < 1 or len(event_comment) < 1:
+            errors.append("A field can not be empty")
+            valid = False
+
+        if event_date < unicode(datetime.today().date()):
+            errors.append('A date can not be in the past')
+            valid = False
+
+        if valid:
+            updated_event = Event.objects.filter(id=event_id, user_id=user_id).update(event_name=event_name, event_date = event_date, event_time=event_time, event_location=event_location, event_comment=event_comment)
+            return (True, updated_event)
+
+        return (False, errors)
+
 
 class User(models.Model):
     first_name = models.CharField(max_length=255)
@@ -153,6 +176,7 @@ class Problem(models.Model):
     prob_name = models.TextField(max_length=1000)
     prob_statement = models.TextField(max_length=1000)
     prob_support = models.TextField(max_length=1000)
+    prob_popular = models.BooleanField(default=False)
     prob_comment = models.TextField(max_length=1000)
     prob_sources = models.ManyToManyField(Source)
     created_at = models.DateTimeField(auto_now_add = True)

@@ -99,9 +99,7 @@ def events(request):
 
 def event(request, id):
     if "id" in request.session:
-        print request.session['id']
         event = Event.objects.filter(user_id=request.session['id'], id=id)
-        print event[0]
         context = {
             "event": event[0]
         }
@@ -115,12 +113,14 @@ def resources(request):
     return redirect('/')
 
 
-#operation
+#CRUD Problems
 def add_problem(request):
     if request.method == "POST":
         new_problem = Problem.objects.addProblem(request.POST)
     return redirect('/')
 
+
+# CRUD Event
 def add_event(request):
     if request.method == "POST":
         event = Event.objects.addEvent(request.POST, request.session['id'])
@@ -129,3 +129,19 @@ def add_event(request):
                 messages.add_message(request, messages.INFO, error)
         return redirect('/events')
     return redirect('/')
+
+def delete_event(request, id):
+    if "id" in request.session:
+        Event.objects.get(id=id, user_id=request.session['id']).delete()
+        return redirect('/events')
+    return redirect('/')
+
+def update_event(request, id):
+    if "id" in request.session:
+        update_event = Event.objects.update_event(request.POST, request.session['id'], id)
+        if update_event[0] == False:
+            for error in update_event[1]:
+                messages.add_message(request, messages.INFO, error)
+                return redirect('edit_event', id=id)
+        else:
+            return redirect("/events")

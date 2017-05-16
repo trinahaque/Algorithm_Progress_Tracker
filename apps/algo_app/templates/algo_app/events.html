@@ -16,8 +16,8 @@
           <li><a href="/all">All Problems</a></li>
           <li><a href="/new">New Problem</a></li>
           <li><a href="/popular">Polular Problems</a></li>
-          <li><a href="/events">Events</a></li>
           <li><a href="/resources">Resources</a></li>
+          <li><a href="/events">Events</a></li>
           <li><a href="/logout">Log Out</a></li>
         </ul>
       </div>
@@ -48,7 +48,7 @@
 
         <h5>Future Events</h5>
         {% for other in upcoming %}
-          <p><a href="/event/{{other.id}}">{{other.event_name|title}}</a></p>
+          <p><a href="/edit/{{other.id}}">{{other.event_name|title}}</a></p>
         {% endfor %}
       </div>
 

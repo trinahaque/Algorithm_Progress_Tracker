@@ -5,3 +5,8 @@
 .header {
   background-color: #66c6bc;
 }
+
+.error {
+  color: #D8000C;
+	background-color: #FFBABA;
+}

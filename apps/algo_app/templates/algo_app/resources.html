@@ -1,8 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'algo_app/style.css' %}" />
     <title>Resources</title>
   </head>
   <body>
@@ -14,11 +16,35 @@
           <li><a href="/all">All Problems</a></li>
           <li><a href="/new">New Problem</a></li>
           <li><a href="/popular">Polular Problems</a></li>
-          <li><a href="/events">Events</a></li>
           <li><a href="/resources">Resources</a></li>
+          <li><a href="/events">Events</a></li>
           <li><a href="/logout">Log Out</a></li>
         </ul>
       </div>
     </nav>
+    <!-- <h5 class="flow-text">Here are some resources for Data Structures and Algorithms</h5> -->
+    <ul class="collection with-header">
+        <li class="collection-header"><h4>Here are some resources for Data Structures and Algorithms</h4></li>
+        <li class="collection-item">
+          <p><a href="http://www.geeksforgeeks.org/data-structures/">GeeksforGeeks</a></p>
+          <p>It has popular data structure problems as well as their solutions in Python and other popular languages</p>
+        </li>
+        <li class="collection-item">
+          <p><a href="https://www.reddit.com/r/learnprogramming/comments/5llmml/interesting_python_practice_problems_from_the/">Reddit Python Algorithm Problem</a></p>
+          <p>List of various popular data structure problems in reddit </p>
+        </li>
+        <li class="collection-item">
+          <p><a href="http://www.learn4master.com/interview-questions/leetcode/leetcode-problems-classified-by-company">Leetcode Problems By Companies</a></p>
+          <p>Popular Leetcode interview questions classified by companies </p>
+        </li>
+        <li class="collection-item">
+          <p><a href="https://www.youtube.com/channel/UCWSYAntBbdd2SLYUqPIxo0w">Byte by Byte</a></p>
+          <p>Youtube channel explaining various interview problems</p>
+        </li>
+        <li class="collection-item">
+          <p><a href="https://github.com/harryttd/Cracking-the-Coding-Interview-Javascript-Solutions-CTCI">CTCI</a></p>
+          <p>Cracking The Coding Interview JavaScript solutions </p>
+        </li>
+      </ul>
   </body>
 </html>
