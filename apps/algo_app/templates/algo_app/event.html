@@ -22,7 +22,7 @@
         </ul>
       </div>
     </nav>
-    <p><a href="/events" class="btn waves-effect waves-light">Return to Event Page</a>&nbsp;&nbsp;<a href="/delete/{{event.id}}" class="btn waves-effect waves-light">Delete {{event.event_name|title}}</a></p>
+    <p><a href="/events" class="btn waves-effect waves-light">Return to Event Page</a>&nbsp;&nbsp;<a href="/delete_event/{{event.id}}" class="btn waves-effect waves-light">Delete {{event.event_name|title}}</a></p>
     <div class ="col s8">
       <form class="col s12" action="/update_event/{{event.id}}" method="POST">
         {% csrf_token %}

@@ -20,5 +20,12 @@
         </ul>
       </div>
     </nav>
+    <div class="row">
+      <div class="input-field col s2">
+        {% for problem in popular %}
+          <p><a href="/problem/{{problem.id}}">{{problem.prob_name|title}}</a></p>
+        {% endfor %}
+      </div>
+    </div>
   </body>
 </html>

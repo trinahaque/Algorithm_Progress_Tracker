@@ -62,7 +62,14 @@ def logout(request):
 # rendering pages
 def dashboard(request):
     if "id" in request.session:
-        return render(request, "algo_app/dashboard.html")
+        today = localtime(now()).date()
+        start_week = today - datetime.timedelta(days=0)
+        end_week = today + datetime.timedelta(days=7)
+        context = {
+            "start_week":start_week,
+            "end_week": end_week
+        }
+        return render(request, "algo_app/dashboard.html", context)
     return redirect('/')
 
 def all(request):
@@ -98,7 +105,13 @@ def new(request):
 
 def popular(request):
     if "id" in request.session:
-        return render(request, "algo_app/popular.html")
+        popular = Problem.objects.filter(prob_popular=True)
+        for problem in popular:
+            print problem.prob_name
+        context = {
+         "popular": popular
+        }
+        return render(request, "algo_app/popular.html", context)
     return redirect('/')
 
 def events(request):
