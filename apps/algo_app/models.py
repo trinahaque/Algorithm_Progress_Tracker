@@ -88,7 +88,7 @@ class UserManager(models.Manager):
 
 
 class ProblemManager(models.Manager):
-    def addProblem(self, POST):
+    def addProblem(self, POST, id):
         prob_name = POST['prob_name'].lower()
         prob_statement = POST['prob_statement']
         prob_type = POST['prob_type'].lower()
@@ -105,14 +105,30 @@ class ProblemManager(models.Manager):
             valid = False
 
         if valid:
+            user = User.objects.get(id=id)
             data_type = Type.objects.filter(data_type=prob_type)
             if len(data_type) < 1:
                 prob_type = Type.objects.create(data_type=prob_type)
             else:
                 prob_type = data_type[0]
 
-            problem = Problem.objects.create(prob_name=prob_name, prob_statement=prob_statement, prob_type=prob_type, prob_sources=prob_sources, prob_support=prob_support, prob_popular=prob_popular, prob_comment=prob_comment)
+            problem = Problem.objects.create(user=user, prob_name=prob_name, prob_statement=prob_statement, prob_type=prob_type, prob_sources=prob_sources, prob_support=prob_support, prob_popular=prob_popular, prob_comment=prob_comment)
             return (True, problem)
+        return (False, errors)
+
+
+class SolutionManager(models.Manager):
+    def addSolution(self, POST, id, prob_id):
+        solution = POST['solution']
+        user = User.objects.get(id=id)
+        problem = Problem.objects.get(id=prob_id)
+        errors = []
+
+        if len(solution) < 5:
+            errors.append("Solution needs to be longer than five character")
+        else:
+            solution = Solution.objects.create(user=user, problem=problem, solution=solution)
+            return (True, solution)
         return (False, errors)
 
 
@@ -181,6 +197,7 @@ class Type(models.Model):
 
 
 class Problem(models.Model):
+    user = models.ForeignKey(User)
     prob_type = models.ForeignKey(Type)
     prob_name = models.TextField(max_length=1000)
     prob_statement = models.TextField(max_length=1000)
@@ -191,6 +208,13 @@ class Problem(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = ProblemManager()
+
+
+class Solution(models.Model):
+    solution = models.TextField()
+    user = models.ForeignKey(User)
+    problem = models.ForeignKey(Problem)
+    objects = SolutionManager()
 
 
 class Event(models.Model):

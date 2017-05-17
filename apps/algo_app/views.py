@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
-from .models import User, Problem, Type, Event
+from .models import User, Problem, Type, Event, Solution
 from django.db.models import Q
 import datetime
 from datetime import date
@@ -149,8 +149,7 @@ def resources(request):
 #CRUD Problems
 def add_problem(request):
     if request.method == "POST":
-        new_problem = Problem.objects.addProblem(request.POST)
-        print "new_problem is", new_problem
+        new_problem = Problem.objects.addProblem(request.POST, request.session['id'])
         if new_problem[0] == False:
             for error in new_problem[1]:
                 messages.add_message(request, messages.INFO, error)
@@ -161,6 +160,7 @@ def add_problem(request):
 
 def delete_problem(request, id):
     if "id" in request.session:
+        user = User.objects.get(id=request.session['id'])
         Problem.objects.get(id=id).delete()
         return redirect('/all')
     return redirect('/')
@@ -168,11 +168,32 @@ def delete_problem(request, id):
 def problem(request, id):
     if "id" in request.session:
         problem = Problem.objects.get(id=id)
+        user = User.objects.get(id=request.session['id'])
+        solutions = Solution.objects.filter(user=user, problem=problem)
+
         context = {
-            "problem":problem
+            "problem":problem,
+            "solutions":solutions
         }
         return render(request, "algo_app/problem.html", context)
     return redirect('/')
+
+
+def add_solution(request, pid):
+    if "id" in request.session:
+        solution = Solution.objects.addSolution(request.POST, request.session['id'], pid)
+        if solution[0] == False:
+            for error in solution[1]:
+                messages.add_message(request, messages.INFO, error)
+        return redirect('problem', id=pid)
+    return redirect('/')
+
+def delete_solution(request, sid, pid):
+    if "id" in request.session:
+        Solution.objects.get(id=sid).delete()
+        return redirect('problem', id=pid)
+    return redirect('/')
+
 
 
 # CRUD Event
