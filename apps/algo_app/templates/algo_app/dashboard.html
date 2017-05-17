@@ -4,16 +4,16 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="{% static 'algo_app/style.css' %}" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <link rel='stylesheet' href='fullcalendar/fullcalendar.css'/>
     <script src='lib/jquery.min.js'></script>
     <script src='lib/moment.min.js'></script>
     <script src='fullcalendar/fullcalendar.js'></script>
     <script src="lib/codemirror.js"></script>
     <link rel="stylesheet" href="lib/codemirror.css">
-    <script src="mode/javascript/javascript.js"></script>
+    <script src="mode/javascript/javascript.js"></script> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
       $(document).ready(function() {
 
     // page is now ready, initialize the calendar...
@@ -23,7 +23,7 @@
         })
 
       });
-    </script>
+    </script> -->
     <title>Dashboard</title>
   </head>
   <body>
@@ -41,8 +41,8 @@
         </ul>
       </div>
     </nav>
-    <div id='calendar'></div>
-    <!-- <div class="row">
+    <!-- <div id='calendar'></div> -->
+    <div class="row">
       <div class="col s8">
         <h5 class="black-text">Plan for This Week ({{start_week|date:"M d"}} - {{end_week|date:"M d"}})</h5>
         <table class="box">
@@ -90,6 +90,6 @@
             {% endfor %}
           </ul>
           {% endif %}
-        </div> -->
+        </div>
   </body>
 </html>
