@@ -6,15 +6,22 @@
   background-color: #66c6bc;
 }
 
-/*.error {
-  color: #D8000C;
-	background-color: #FFBABA;
-}*/
-
 p.text {
   color: #d3d3d3;
 }
 
 .color-text {
   color: blue;
+}
+
+.link {
+  color: cyan;
+}
+
+.headline {
+  color: teal;
+}
+
+span.underline {
+  text-decoration-style: solid;
 }

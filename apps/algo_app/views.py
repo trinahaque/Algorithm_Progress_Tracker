@@ -59,7 +59,7 @@ def logout(request):
     return redirect("/")
 
 
-# pages
+# rendering pages
 def dashboard(request):
     if "id" in request.session:
         return render(request, "algo_app/dashboard.html")
@@ -67,7 +67,28 @@ def dashboard(request):
 
 def all(request):
     if "id" in request.session:
-        return render(request, "algo_app/all.html")
+        array = Problem.objects.filter(prob_type__data_type="array")
+        strings = Problem.objects.filter(prob_type__data_type="strings")
+        linkedlist = Problem.objects.filter(prob_type__data_type="linkedlist")
+        recursion = Problem.objects.filter(prob_type__data_type="recursion")
+        sort = Problem.objects.filter(prob_type__data_type="sort")
+        heap = Problem.objects.filter(prob_type__data_type="heap")
+        bst = Problem.objects.filter(prob_type__data_type="bst")
+        hashmap = Problem.objects.filter(prob_type__data_type="hashmap")
+        graph = Problem.objects.filter(prob_type__data_type="graph")
+
+        context = {
+            "array":array,
+            "strings": strings,
+            "linkedlist": linkedlist,
+            "recursion": recursion,
+            "sort": sort,
+            "heap": heap,
+            "bst": bst,
+            "hashmap": hashmap,
+            "graph": graph
+        }
+        return render(request, "algo_app/all.html", context)
     return redirect('/')
 
 def new(request):
@@ -106,7 +127,6 @@ def event(request, id):
         return render(request, "algo_app/event.html", context)
     # return redirect('/')
 
-
 def resources(request):
     if "id" in request.session:
         return render(request, "algo_app/resources.html")
@@ -126,15 +146,21 @@ def add_problem(request):
             return redirect('problem', id=new_problem[1].id)
     return redirect('/')
 
+def delete_problem(request, id):
+    if "id" in request.session:
+        Problem.objects.get(id=id).delete()
+        return redirect('/all')
+    return redirect('/')
+
 def problem(request, id):
     if "id" in request.session:
         problem = Problem.objects.get(id=id)
-        print problem
         context = {
             "problem":problem
         }
         return render(request, "algo_app/problem.html", context)
     return redirect('/')
+
 
 # CRUD Event
 def add_event(request):

@@ -23,16 +23,26 @@
       </div>
       </nav>
       <div class="row">
-        <div class="col s7">
+        <div class="col s8">
           <h5 class="black-text">{{problem.prob_name|title}}</h5>
-          <p class="black-text">{{problem.prob_statement}}</p>
-          <p class="black-text"><span class="blue-text">Problem Type:</span>{{problem.prob_type|title}}</p>
-          <p class="black-text"><span class="blue-text">Source of Problem:</span>{{problem.prob_sources|title}}</p>
-          <p class="black-text"><span class="blue-text">Supporting Materials:</span><br>
-             {{problem.prob_support|title}}</p>
-          <p><span class="blue-text">Comment:</span>{{problem.prob_comment|title}}</p>
+          <p>{{problem.prob_statement|capfirst}}</p>
+          <table class="box">
+            <tr>
+              <th class="header">Problem Type</th>
+              <th class="header">Source of Problem</th>
+              <th class="header">Supporting Materials</th>
+              <th class="header">Comment?</th>
+            </tr>
+            <tr>
+              <td>{{problem.prob_type.data_type|title}}</td>
+              <td>{{problem.prob_sources|title}}</td>
+              <td>{{problem.prob_support|title}}</td>
+              <td>{{problem.prob_comment|title}}</td>
+            </tr>
+          </table><br><br>
+          <a class="btn waves-effect waves-light" href="/delete/{{problem.id}}">Delete Problem</a>
         </div>
-        <div class="col s5">
+        <div class="col s4">
           <h5 class="title">Add Solution</h5>
           <form class="col s10" action="/add_solution/{{problem.id}}" method="POST">
             {% csrf_token %}

@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^new$', views.new),
     url(r'^add_problem$', views.add_problem),
     url(r'^problem/(?P<id>\d+)$', views.problem, name="problem"),
+    url(r'^delete/(?P<id>\d+)$', views.delete_problem),
     url(r'^popular$', views.popular),
     url(r'^events$', views.events),
     url(r'^edit/(?P<id>\d+)$', views.event, name="edit_event"),

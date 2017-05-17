@@ -1,7 +1,9 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'algo_app/style.css' %}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
     <title>View All Problems</title>
   </head>
@@ -20,5 +22,62 @@
         </ul>
       </div>
     </nav>
+    <ul class="collection with-header">
+        <li class="collection-header"><p class="text">(Click on the problem to view and add solution to the problem)</p></li>
+        <li class="collection-item">
+          <h5 class="headline">Array</h5>
+          {% for problem in array %}
+            <p><a href="/problem/{{problem.id}}">{{problem.prob_name|title}}</a></p>
+          {% endfor %}
+        </li>
+        <li class="collection-item">
+          <h5 class="headline">Strings</h5>
+          {% for problem in strings %}
+            <p><a href="/problem/{{problem.id}}">{{problem.prob_name|title}}</a></p>
+          {% endfor %}
+        </li>
+        <li class="collection-item">
+          <h5 class="headline">Linked List</h5>
+          {% for problem in linkedlist %}
+            <p><a href="/problem/{{problem.id}}">{{problem.prob_name|title}}</a></p>
+          {% endfor %}
+        </li>
+        <li class="collection-item">
+          <h5 class="headline">Recursion</h5>
+          {% for problem in recursion %}
+            <p><a href="/problem/{{problem.id}}">{{problem.prob_name|title}}</a></p>
+          {% endfor %}
+        </li>
+        <li class="collection-item">
+          <h5 class="headline">Sort</h5>
+          {% for problem in sort %}
+            <p><a href="/problem/{{problem.id}}">{{problem.prob_name|title}}</a></p>
+          {% endfor %}
+        </li>
+        <li class="collection-item">
+          <h5 class="headline">Binary Search Tree</h5>
+          {% for problem in bst %}
+            <p><a href="/problem/{{problem.id}}">{{problem.prob_name|title}}</a></p>
+          {% endfor %}
+        </li>
+        <li class="collection-item">
+          <h5 class="headline">Trie</h5>
+          {% for problem in trie %}
+            <p><a href="/problem/{{problem.id}}">{{problem.prob_name|title}}</a></p>
+          {% endfor %}
+        </li>
+        <li class="collection-item">
+          <h5 class="headline">HashMap</h5>
+          {% for problem in hashmap %}
+            <p><a href="/problem/{{problem.id}}">{{problem.prob_name|title}}</a></p>
+          {% endfor %}
+        </li>
+        <li class="collection-item">
+          <h5 class="headline">Graph</h5>
+          {% for problem in graph %}
+            <p><a href="/problem/{{problem.id}}">{{problem.prob_name|title}}</a></p>
+          {% endfor %}
+        </li>
+      </ul>
   </body>
 </html>
