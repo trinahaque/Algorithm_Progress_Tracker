@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from . import views
+
 urlpatterns = [
     url(r'^$', views.index),
     url(r'^register$', views.register),
@@ -11,6 +12,7 @@ urlpatterns = [
     url(r'^all$', views.all),
     url(r'^new$', views.new),
     url(r'^add_problem$', views.add_problem),
+    url(r'^problem/(?P<id>\d+)$', views.problem, name="problem"),
     url(r'^popular$', views.popular),
     url(r'^events$', views.events),
     url(r'^edit/(?P<id>\d+)$', views.event, name="edit_event"),

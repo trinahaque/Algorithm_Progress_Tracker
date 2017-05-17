@@ -1,19 +1,21 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'algo_app/style.css' %}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
     <title>New Problem</title>
   </head>
   <body>
     <nav>
       <div class="nav-wrapper">
-        <a class="brand-logo">New Problem</a>
+        <a class="brand-logo">Submit A New Problem</a>
         <ul class="right hide-on-med-and-down">
           <li><a href="/dashboard">Dashboard</a></li>
           <li><a href="/all">All Problems</a></li>
           <li><a href="/new">New Problem</a></li>
-          <li><a href="/popular">Polular Problems</a></li>
+          <li><a href="/popular">Popular Problems</a></li>
           <li><a href="/resources">Resources</a></li>
           <li><a href="/events">Events</a></li>
           <li><a href="/logout">Log Out</a></li>
@@ -30,17 +32,15 @@
           </div>
         </div>
         <div class="row">
-          <form class="col s4">
-            <div class="row">
-              <div class="input-field col s4">
-                <textarea id="prob_statement" class="materialize-textarea" name="prob_statement" placeholder="Please enter the full problem statement here..."></textarea>
-              </div>
+          <div class="row">
+            <div class="input-field col s4">
+              <textarea id="prob_statement" class="materialize-textarea" name="prob_statement" placeholder="Please enter the full problem statement here..."></textarea>
             </div>
-          </form>
+          </div>
         </div>
         <div class="row">
           <div class="input-field col s4">
-            <select id="prob_type" type="text" class="dropdown-button btn" name="prob_type" placeholder="Problem Type">
+            <select id="prob_type" class="dropdown-button btn" name="prob_type">
               <option class="validate" value="array">Array</option>
               <option class="validate" value="strings">Strings</option>
               <option class="validate" value="linkedlist">Linked List</option>
@@ -56,8 +56,8 @@
         </div>
         <div class="row">
           <div class="input-field col s4">
-            <p class="text">(Select sources of the problem below. You can select multiple options)</p>
-            <select multiple id="prob_sources" type="text" class="dropdown-button btn" name="prob_sources" placeholder="Source(s) of the problem">
+            <p class="text">(Select source of the problem below)</p>
+            <select id="prob_sources" class="dropdown-button btn" name="prob_sources">
               <option class="validate" value="dojo">Dojo</option>
               <option class="validate" value="ctci">CTCI</option>
               <option class="validate" value="leetcode">Leetcode</option>
@@ -68,25 +68,39 @@
         </div>
         <div class="row">
           <div class="input-field col s4">
-            <input id="prob_support" type="text" class="validate" name="prob_support" placeholder="Please enter supporting materials here (optional)">
+            <input id="prob_support" type="text" class="validate" name="prob_support" placeholder="Please enter supporting materials here. None if there is none">
           </div>
         </div>
         <div class="row">
           <div class="input-field col s4">
-            (Popular problem?)
-            <select id="popular" type="text" class="dropdown-button btn" name="popular" placeholder="Popular problem?">
-              <option class="validate" value="false">No</option>
-              <option class="validate" value="true">Yes</option>
+            <p class="text">(Popular problem?)</p>
+            <select id="popular" class="dropdown-button btn" name="popular">
+              <option class="validate" value="False">No</option>
+              <option class="validate" value="True">Yes</option>
             </select>
           </div>
         </div>
         <div class="row">
-          <div class="input-field col s4">
-            <input id="prob_comment" type="text" class="validate" name="prob_comment" placeholder="Comment (optional)">
+          <div class="row">
+            <div class="input-field col s4">
+              <textarea id="prob_comment" class="materialize-textarea" name="prob_comment" placeholder="Comment..."></textarea>
+            </div>
           </div>
         </div>
-        <button class="btn waves-effect waves-light" type="submit">Submit Problem</button>
+        <div class="row">
+          <div class="input-field col s4">
+            <button class="btn waves-effect waves-light" type="submit">Submit Problem</button>
+          </div>
+        </div>
       </form>
-   </div>
+    </div>
+     {% if messages %}
+       <ul class="messages">
+         {% for message in messages %}
+         <li{% if message.tags %} class="{{ message.tags}}" {% endif %}>{{ message }}
+         </li>
+         {% endfor %}
+       </ul>
+     {% endif %}
   </body>
 </html>

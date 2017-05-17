@@ -6,7 +6,15 @@
   background-color: #66c6bc;
 }
 
-.error {
+/*.error {
   color: #D8000C;
 	background-color: #FFBABA;
+}*/
+
+p.text {
+  color: #d3d3d3;
+}
+
+.color-text {
+  color: blue;
 }

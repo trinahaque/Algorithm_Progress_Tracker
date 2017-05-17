@@ -89,16 +89,31 @@ class UserManager(models.Manager):
 
 class ProblemManager(models.Manager):
     def addProblem(self, POST):
-        prob_type = POST['prob_type']
         prob_name = POST['prob_name'].lower()
         prob_statement = POST['prob_statement']
-        # prob_statement = POST.get('prob_statement')
-        prob_support = POST['prob_support']
-        # prob_comment = POST.get('comment')
+        prob_type = POST['prob_type'].lower()
         prob_sources = POST['prob_sources']
-        # print prob_sources
+        prob_support = POST['prob_support']
+        prob_popular = POST['popular']
+        prob_comment = POST['prob_comment']
 
-        data_type = Type.objects.get(data_type=prob_type)
+        errors = []
+
+        valid = True
+        if len(prob_name) < 1 or len(prob_statement) < 1 or len(prob_type) < 1 or len(prob_sources) < 1 or len(prob_support) < 1 or len(prob_popular) < 1 or len(prob_comment) < 1:
+            errors.append("A field can not be empty")
+            valid = False
+
+        if valid:
+            data_type = Type.objects.filter(data_type=prob_type)
+            if len(data_type) < 1:
+                prob_type = Type.objects.create(data_type=prob_type)
+            else:
+                prob_type = data_type[0]
+
+            problem = Problem.objects.create(prob_name=prob_name, prob_statement=prob_statement, prob_type=prob_type, prob_sources=prob_sources, prob_support=prob_support, prob_popular=prob_popular, prob_comment=prob_comment)
+            return (True, problem)
+        return (False, errors)
 
 
 class EventManager(models.Manager):
@@ -165,12 +180,6 @@ class Type(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-class Source(models.Model):
-    prob_source = models.CharField(max_length=255)
-    # created_at = models.DateTimeField(auto_now_add = True)
-    # updated_at = models.DateTimeField(auto_now=True)
-
-
 class Problem(models.Model):
     prob_type = models.ForeignKey(Type)
     prob_name = models.TextField(max_length=1000)
@@ -178,7 +187,7 @@ class Problem(models.Model):
     prob_support = models.TextField(max_length=1000)
     prob_popular = models.BooleanField(default=False)
     prob_comment = models.TextField(max_length=1000)
-    prob_sources = models.ManyToManyField(Source)
+    prob_sources = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = ProblemManager()

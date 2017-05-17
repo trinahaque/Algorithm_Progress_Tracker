@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
-from .models import User, Problem, Type, Source, Event
+from .models import User, Problem, Type, Event
 from django.db.models import Q
 import datetime
 from datetime import date
@@ -117,8 +117,24 @@ def resources(request):
 def add_problem(request):
     if request.method == "POST":
         new_problem = Problem.objects.addProblem(request.POST)
+        print "new_problem is", new_problem
+        if new_problem[0] == False:
+            for error in new_problem[1]:
+                messages.add_message(request, messages.INFO, error)
+                return redirect('/new')
+        else:
+            return redirect('problem', id=new_problem[1].id)
     return redirect('/')
 
+def problem(request, id):
+    if "id" in request.session:
+        problem = Problem.objects.get(id=id)
+        print problem
+        context = {
+            "problem":problem
+        }
+        return render(request, "algo_app/problem.html", context)
+    return redirect('/')
 
 # CRUD Event
 def add_event(request):
