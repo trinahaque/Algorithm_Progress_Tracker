@@ -112,8 +112,14 @@ class ProblemManager(models.Manager):
             else:
                 prob_type = data_type[0]
 
-            problem = Problem.objects.create(user=user, prob_name=prob_name, prob_statement=prob_statement, prob_type=prob_type, prob_sources=prob_sources, prob_support=prob_support, prob_popular=prob_popular, prob_comment=prob_comment)
-            return (True, problem)
+            unique = Problem.objects.filter(prob_name=prob_name)
+
+            if len(unique) < 1:
+                problem = Problem.objects.create(user=user, prob_name=prob_name, prob_statement=prob_statement, prob_type=prob_type, prob_sources=prob_sources, prob_support=prob_support, prob_popular=prob_popular, prob_comment=prob_comment)
+                return (True, problem)
+            else:
+                errors.append("Problem already exists")
+
         return (False, errors)
 
 
@@ -182,7 +188,31 @@ class EventManager(models.Manager):
 
 class CalendarManager(models.Manager):
     def addCalendar(self, POST, id):
-        pass
+        prob_name = POST['problem'].lower()
+        date = POST['date_cal']
+        errors = []
+
+        valid = True
+        if len(prob_name) < 1 or len(date) < 1:
+            errors.append("A field can not be empty")
+            valid = False
+
+        if date < unicode(datetime.today().date()):
+            errors.append("Can not add past events")
+            valid = False
+
+        if valid:
+            user = User.objects.get(id=id)
+            problem = Problem.objects.get(prob_name=prob_name)
+            cal = Calendar.objects.filter(problem=problem)
+
+            if len(cal) < 1:
+                calendar = Calendar.objects.create(user=user, date=date, problem=problem)
+                return (True, calendar)
+            else:
+                errors.append("The problem is already in the calendar")
+
+        return (False, errors)
 
 
 class User(models.Model):
@@ -236,7 +266,6 @@ class Event(models.Model):
 
 class Calendar(models.Model):
     user = models.ForeignKey(User)
-    date = models.DateTimeField()
-    problems = models.ManyToManyField(Problem)
-    # events = models.ManyToManyField(Event)
+    date = models.CharField(max_length=255)
+    problem = models.ForeignKey(Problem)
     objects = CalendarManager()

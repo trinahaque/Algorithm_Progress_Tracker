@@ -1,11 +1,16 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
-from .models import User, Problem, Type, Event, Solution
+from .models import User, Problem, Type, Event, Solution, Calendar
 from django.db.models import Q
 import datetime
 from datetime import date
 from django.utils.timezone import localtime, now
 # this imports local time
+
+
+def daterange(start_date, end_date):
+    for n in range(int((end_date-start_date).days)):
+        yield start_date + datetime.timedelta(n)
 
 
 # log in and registration
@@ -65,12 +70,19 @@ def dashboard(request):
         user = User.objects.get(id=request.session['id'])
         problems = Problem.objects.filter(user=user)
         today = localtime(now()).date()
-        start_week = today - datetime.timedelta(days=0)
-        end_week = today + datetime.timedelta(days=7)
+        start_date = today - datetime.timedelta(days=0)
+        end_date = today + datetime.timedelta(days=7)
+        dateranges = daterange(start_date, end_date)
+        # needs to convert dateranges into yyyy-mm-dd format
+
+        calendars = Calendar.objects.filter(date__range=(start_date, end_date)).order_by('date')
+
         context = {
-            "start_week":start_week,
-            "end_week": end_week,
-            "problems": problems
+            "start_date":start_date,
+            "end_date": end_date,
+            "problems": problems,
+            "dateranges": dateranges,
+            "calendars": calendars
         }
         return render(request, "algo_app/dashboard.html", context)
     return redirect('/')
@@ -151,7 +163,7 @@ def resources(request):
 
 #CRUD Problems
 def add_problem(request):
-    if request.method == "POST":
+    if request.method == "POST" and "id" in request.session:
         new_problem = Problem.objects.addProblem(request.POST, request.session['id'])
         if new_problem[0] == False:
             for error in new_problem[1]:
@@ -201,7 +213,7 @@ def delete_solution(request, sid, pid):
 
 # CRUD Event
 def add_event(request):
-    if request.method == "POST":
+    if request.method == "POST" and "id" in request.session:
         event = Event.objects.addEvent(request.POST, request.session['id'])
         if event[0] == False:
             for error in event[1]:
@@ -224,3 +236,14 @@ def update_event(request, id):
                 return redirect('edit_event', id=id)
         else:
             return redirect("/events")
+
+
+#Calendar/Dashboard
+def add_calendar(request):
+    if request.method == "POST" and "id" in request.session:
+        calendar = Calendar.objects.addCalendar(request.POST, request.session['id'])
+        if calendar[0] == False:
+            for error in calendar[1]:
+                messages.add_message(request, messages.INFO, error)
+        return redirect("/dashboard")
+    return redirect('/')
