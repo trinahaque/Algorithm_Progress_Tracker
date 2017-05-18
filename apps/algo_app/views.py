@@ -62,12 +62,15 @@ def logout(request):
 # rendering pages
 def dashboard(request):
     if "id" in request.session:
+        user = User.objects.get(id=request.session['id'])
+        problems = Problem.objects.filter(user=user)
         today = localtime(now()).date()
         start_week = today - datetime.timedelta(days=0)
         end_week = today + datetime.timedelta(days=7)
         context = {
             "start_week":start_week,
-            "end_week": end_week
+            "end_week": end_week,
+            "problems": problems
         }
         return render(request, "algo_app/dashboard.html", context)
     return redirect('/')

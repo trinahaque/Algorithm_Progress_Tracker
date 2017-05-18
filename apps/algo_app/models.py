@@ -180,6 +180,11 @@ class EventManager(models.Manager):
         return (False, errors)
 
 
+class CalendarManager(models.Manager):
+    def addCalendar(self, POST, id):
+        pass
+
+
 class User(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
@@ -227,3 +232,11 @@ class Event(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = EventManager()
+
+
+class Calendar(models.Model):
+    user = models.ForeignKey(User)
+    date = models.DateTimeField()
+    problems = models.ManyToManyField(Problem)
+    # events = models.ManyToManyField(Event)
+    objects = CalendarManager()

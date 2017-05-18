@@ -4,26 +4,7 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="{% static 'algo_app/style.css' %}" />
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <link rel='stylesheet' href='fullcalendar/fullcalendar.css'/>
-    <script src='lib/jquery.min.js'></script>
-    <script src='lib/moment.min.js'></script>
-    <script src='fullcalendar/fullcalendar.js'></script>
-    <script src="lib/codemirror.js"></script>
-    <link rel="stylesheet" href="lib/codemirror.css">
-    <script src="mode/javascript/javascript.js"></script> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
-    <!-- <script type="text/javascript">
-      $(document).ready(function() {
-
-    // page is now ready, initialize the calendar...
-
-        $('#calendar').fullCalendar({
-            // put your options and callbacks here
-        })
-
-      });
-    </script> -->
     <title>Dashboard</title>
   </head>
   <body>
@@ -41,16 +22,14 @@
         </ul>
       </div>
     </nav>
-    <!-- <div id='calendar'></div> -->
     <div class="row">
-      <div class="col s8">
-        <h5 class="black-text">Plan for This Week ({{start_week|date:"M d"}} - {{end_week|date:"M d"}})</h5>
+      <div class="col s7">
+        <h5 class="black-text">Plan For This Week ({{start_week|date:"M d"}} - {{end_week|date:"M d"}})</h5>
         <table class="box">
           <tr>
             <th class="header">Date</th>
-            <th class="header">Problems</th>
-            <th class="header">Status</th>
-            <th class="header">Events</th>
+            <th class="header">Problem</th>
+            <th class="header">Event</th>
           </tr>
           <tr {% for event in events %}>
             <td>{{event.event_name|title}}</td>
@@ -59,18 +38,23 @@
             <td>{{event.event_location|title}}</td>
             <td>{{event.event_comment}}</td>
             <td><a href="/edit/{{event.id}}">Edit</a></td>
-            <td><a href="/delete/{{event.id}}">Delete</a></td>
+            <td><a href="/delete_event/{{event.id}}">Delete</a></td>
           </tr {% endfor %}>
         </table><br><br>
       </div>
-      <div class="col s4">
-        <h5 class="title">Add Problem To A Date</h5>
+
+      <div class="col s5">
+        <h5 class="title">Plan your problems</h5>
         <div class="row">
           <form class="col s10" action="/add_calendar" method="POST">
             {% csrf_token %}
             <div class="row">
-              <div class="input-field col s10">
-                <input id="event_name" type="text" class="validate" name="event_name" placeholder="Event Name">
+              <div class="input-field col s4">
+                <select id="problems" class="dropdown-button btn" name="problems">
+                  {% for problem in problems %}
+                    <option class="validate">{{problem.prob_name|title}}</option>
+                  {% endfor %}
+                </select>
               </div>
             </div>
             <div class="row">
@@ -79,7 +63,7 @@
               </div>
             </div>
             <div class="row">
-              <button class="btn waves-effect waves-light" type="submit">Add</button>
+              <button class="btn waves-effect waves-light" type="submit">Submit</button>
             </div>
           </form>
           {% if messages %}
@@ -91,5 +75,7 @@
           </ul>
           {% endif %}
         </div>
+      </div>
+    </div>
   </body>
 </html>
