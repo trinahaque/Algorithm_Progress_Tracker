@@ -68,14 +68,14 @@ def logout(request):
 def dashboard(request):
     if "id" in request.session:
         user = User.objects.get(id=request.session['id'])
-        problems = Problem.objects.filter(user=user)
         today = localtime(now()).date()
         start_date = today - datetime.timedelta(days=0)
         end_date = today + datetime.timedelta(days=7)
         dateranges = daterange(start_date, end_date)
-        # needs to convert dateranges into yyyy-mm-dd format
 
-        calendars = Calendar.objects.filter(date__range=(start_date, end_date)).order_by('date')
+        calendars = Calendar.objects.filter(date__range=(start_date, end_date), user=user).order_by('date')
+        prob_ids = [calendar.problem.id for calendar in calendars]
+        problems = Problem.objects.filter(user=user).exclude(id__in=prob_ids)
 
         context = {
             "start_date":start_date,
@@ -89,15 +89,15 @@ def dashboard(request):
 
 def all(request):
     if "id" in request.session:
-        array = Problem.objects.filter(prob_type__data_type="array")
-        strings = Problem.objects.filter(prob_type__data_type="strings")
-        linkedlist = Problem.objects.filter(prob_type__data_type="linkedlist")
-        recursion = Problem.objects.filter(prob_type__data_type="recursion")
-        sort = Problem.objects.filter(prob_type__data_type="sort")
-        heap = Problem.objects.filter(prob_type__data_type="heap")
-        bst = Problem.objects.filter(prob_type__data_type="bst")
-        hashmap = Problem.objects.filter(prob_type__data_type="hashmap")
-        graph = Problem.objects.filter(prob_type__data_type="graph")
+        array = Problem.objects.filter(prob_type__data_type="array", user_id=request.session['id'])
+        strings = Problem.objects.filter(prob_type__data_type="strings", user_id=request.session['id'])
+        linkedlist = Problem.objects.filter(prob_type__data_type="linkedlist", user_id=request.session['id'])
+        recursion = Problem.objects.filter(prob_type__data_type="recursion", user_id=request.session['id'])
+        sort = Problem.objects.filter(prob_type__data_type="sort", user_id=request.session['id'])
+        heap = Problem.objects.filter(prob_type__data_type="heap", user_id=request.session['id'])
+        bst = Problem.objects.filter(prob_type__data_type="bst", user_id=request.session['id'])
+        hashmap = Problem.objects.filter(prob_type__data_type="hashmap", user_id=request.session['id'])
+        graph = Problem.objects.filter(prob_type__data_type="graph", user_id=request.session['id'])
 
         context = {
             "array":array,
@@ -120,9 +120,9 @@ def new(request):
 
 def popular(request):
     if "id" in request.session:
-        popular = Problem.objects.filter(prob_popular=True)
-        for problem in popular:
-            print problem.prob_name
+        user = User.objects.get(id=request.session['id'])
+        popular = Problem.objects.filter(prob_popular=True, user=user)
+
         context = {
          "popular": popular
         }
@@ -153,7 +153,7 @@ def event(request, id):
             "event": event[0]
         }
         return render(request, "algo_app/event.html", context)
-    # return redirect('/')
+    return redirect('/')
 
 def resources(request):
     if "id" in request.session:

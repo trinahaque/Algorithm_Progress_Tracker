@@ -25,10 +25,6 @@ class UserManager(models.Manager):
             if len(first_name) < 2 or len(last_name) < 2:
                 errors.append("Name field needs at least two characters")
                 valid = False
-            elif first_name.isalpha() == False or last_name.isalpha() == False:
-                errors.append("Name field needs to be all letters")
-                valid = False
-
 
             # email
             if not Email_Regex.match(email):
@@ -198,7 +194,7 @@ class CalendarManager(models.Manager):
             valid = False
 
         if date < unicode(datetime.today().date()):
-            errors.append("Can not add past events")
+            errors.append("Date can not be in the past")
             valid = False
 
         if valid:

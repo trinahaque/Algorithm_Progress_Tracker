@@ -22,6 +22,11 @@
     </nav>
     <div class="row">
       <div class="input-field col s2">
+        <a href="http://www.geeksforgeeks.org/top-10-algorithms-in-interview-questions/">Popular Problems</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s2">
         {% for problem in popular %}
           <p><a href="/problem/{{problem.id}}">{{problem.prob_name|title}}</a></p>
         {% endfor %}
