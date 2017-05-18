@@ -24,53 +24,54 @@
     </nav>
 
     <div class="row">
-      <div class="col s7">
+      <div class="col s12">
         <h5 class="black-text">Plan For This Week ({{start_date|date:"M d"}} - {{end_date|date:"M d"}})</h5>
-        <table class="box">
+        <table>
           <tr>
             <th class="header">Date</th>
-            <th class="header">Problem</th>
-            <th class="header">Event</th>
+            <th class="header">Problem1</th>
+            <th class="header">Problem2</th>
+            <th class="header">Problem3</th>
+            <th class="header">Problem4</th>
+            <th class="header">Problem5</th>
           </tr>
           <tr {% for date in dateranges %}>
             <td>{{date|date:"M d"}}</td>
               {% for calendar in calendars %}
-                {% if calendar.date == date %}
-                <td>{{calendar.problem.prob_name}}</td>
-                {% else %}
-                <td>None</td>
+                {% if calendar.date == date|date:"Y-m-d" %}
+                <td><a href="/problem/{{calendar.problem.id}}">{{calendar.problem.prob_name|title}}</a></td>
                 {% endif %}
               {% endfor %}
-            <td>{{event.event_date|date:"M d"}}</td>
           </tr {% endfor %}>
         </table><br><br>
-      </div>
-
-      <div class="col s5">
-        <h5 class="title">Create Your Plan</h5>
-        <div class="row">
-          <form class="col s10" action="/add_calendar" method="POST">
-            {% csrf_token %}
-            <div class="row">
-              <div class="input-field col s10">
-                <select id="problem" class="dropdown-button btn" name="problem">
-                  {% for problem in problems %}
-                    <option class="validate">{{problem.prob_name|title}}</option>
-                  {% endfor %}
-                </select>
+        <hr><br>
+        <div class="box">
+          <h5 class="title">Create Your Plan</h5>
+          <div class="row">
+            <p class="text">(If drop down is empty, add a <a href="/new">New Problem</a>)</p>
+            <form class="col s4" action="/add_calendar" method="POST">
+              {% csrf_token %}
+              <div class="row">
+                <div class="input-field col s10">
+                  <select id="problem" class="dropdown-button btn" name="problem">
+                    {% for problem in problems %}
+                      <option class="validate">{{problem.prob_name|title}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="input-field col s10">
-                <input id="date" type="date" class="validate" name="date_cal" placeholder="Date">
+              <div class="row">
+                <div class="input-field col s10">
+                  <input id="date" type="date" class="validate" name="date_cal" placeholder="Date">
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="input-field col s10">
-                <button class="btn waves-effect waves-light" type="submit">Submit</button>
+              <div class="row">
+                <div class="input-field col s10">
+                  <button class="btn waves-effect waves-light" type="submit">Submit</button>
+                </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
 
           {% if messages %}
           <ul class="messages">
