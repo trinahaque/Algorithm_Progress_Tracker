@@ -9,11 +9,14 @@ https://docs.djangoproject.com/en/1.10/howto/deployment/wsgi/
 
 import os
 
-from django.core.wsgi import get_wsgi_application
-from whitenoise.django import DjangoWhiteNoise
+# sys.path.append('/Users/trinahaque28/Desktop/cd_python/DSA_Progress_Tracker')
+# sys.path.append('/Users/trinahaque28/Desktop/cd_python/myEnvironment/djangoEnv/lib/python2.7/site-packages')
 
-application = get_wsgi_application()
-application = DjangoWhiteNoise(application)
+from django.core.wsgi import get_wsgi_application
+# from whitenoise.django import DjangoWhiteNoise
+#
+# application = get_wsgi_application()
+# application = DjangoWhiteNoise(application)
 
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Algorithm_Progress_Tracker.settings")
