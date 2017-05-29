@@ -200,7 +200,7 @@ class CalendarManager(models.Manager):
         if valid:
             user = User.objects.get(id=id)
             problem = Problem.objects.get(prob_name=prob_name)
-            cal = Calendar.objects.filter(problem=problem)
+            cal = Calendar.objects.filter(problem=problem, user=user)
 
             if len(cal) < 1:
                 calendar = Calendar.objects.create(user=user, date=date, problem=problem)
