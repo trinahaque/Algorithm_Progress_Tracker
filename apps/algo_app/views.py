@@ -146,9 +146,9 @@ def events(request):
         return render(request, "algo_app/events.html", context)
     return redirect('/')
 
-def event(request, id):
+def event(request, eid):
     if "id" in request.session:
-        event = Event.objects.filter(user_id=request.session['id'], id=id)
+        event = Event.objects.filter(user_id=request.session['id'], id=eid)
         context = {
             "event": event[0]
         }
@@ -221,19 +221,19 @@ def add_event(request):
         return redirect('/events')
     return redirect('/')
 
-def delete_event(request, id):
+def delete_event(request, eid):
     if "id" in request.session:
-        Event.objects.get(id=id, user_id=request.session['id']).delete()
+        Event.objects.get(id=eid, user_id=request.session['id']).delete()
         return redirect('/events')
     return redirect('/')
 
-def update_event(request, id):
+def update_event(request, eid):
     if "id" in request.session:
-        update_event = Event.objects.update_event(request.POST, request.session['id'], id)
+        update_event = Event.objects.update_event(request.POST, request.session['id'], eid)
         if update_event[0] == False:
             for error in update_event[1]:
                 messages.add_message(request, messages.INFO, error)
-                return redirect('edit_event', id=id)
+                return redirect('edit_event', id=eid)
         else:
             return redirect("/events")
 

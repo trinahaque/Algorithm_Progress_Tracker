@@ -21,9 +21,9 @@ urlpatterns = [
 
     url(r'^popular$', views.popular),
     url(r'^events$', views.events),
-    url(r'^edit/(?P<id>\d+)$', views.event, name="edit_event"),
-    url(r'^delete_event/(?P<id>\d+)$', views.delete_event),
-    url(r'^update_event/(?P<id>\d+)$', views.update_event),
+    url(r'^edit/(?P<eid>\d+)$', views.event, name="edit_event"),
+    url(r'^delete_event/(?P<eid>\d+)$', views.delete_event),
+    url(r'^update_event/(?P<eid>\d+)$', views.update_event),
     url(r'^add_event$', views.add_event),
     url(r'^resources$', views.resources),
 

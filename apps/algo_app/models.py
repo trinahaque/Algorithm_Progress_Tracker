@@ -201,12 +201,15 @@ class CalendarManager(models.Manager):
             user = User.objects.get(id=id)
             problem = Problem.objects.get(prob_name=prob_name)
             cal = Calendar.objects.filter(problem=problem, user=user)
+            five_probs = Calendar.objects.filter(date=date)
 
-            if len(cal) < 1:
+            if len(cal) < 1 and len(five_probs) < 5:
                 calendar = Calendar.objects.create(user=user, date=date, problem=problem)
                 return (True, calendar)
-            else:
+            elif len(cal) > 1:
                 errors.append("The problem is already in the calendar")
+            else:
+                errors.append("You can add only five problems each day")
 
         return (False, errors)
 
