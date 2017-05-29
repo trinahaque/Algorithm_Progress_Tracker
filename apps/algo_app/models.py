@@ -127,7 +127,7 @@ class SolutionManager(models.Manager):
         errors = []
 
         if len(solution) < 5:
-            errors.append("Solution needs to be longer than five character")
+            errors.append("Solution needs to be longer than five characters")
         else:
             solution = Solution.objects.create(user=user, problem=problem, solution=solution)
             return (True, solution)

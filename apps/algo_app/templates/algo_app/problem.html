@@ -46,8 +46,15 @@
 
           <h5>Solutions</h5>
           {% for solution in solutions %}
-              <div class="box">{{solution.solution}}</div>
-              <a class="btn waves-effect waves-light" href="/delete_solution/{{solution.id}}/{{solution.problem.id}}">Delete Solution</a><br><br><br>
+          <div class="row">
+             <div class="col s12 m6">
+               <div class="card-panel #e57373 red lighten-2">
+                 <span class="white-text">{{solution.solution}}
+                 </span><br><br>
+                 <a class="btn waves-effect waves-light" href="/delete_solution/{{solution.id}}/{{solution.problem.id}}">Delete Solution</a><br><br><br>
+               </div>
+             </div>
+           </div>
           {% endfor %}<br><br>
 
 
