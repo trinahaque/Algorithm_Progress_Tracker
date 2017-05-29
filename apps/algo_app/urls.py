@@ -13,8 +13,8 @@ urlpatterns = [
     url(r'^new$', views.new),
 
     url(r'^add_problem$', views.add_problem),
-    url(r'^problem/(?P<id>\d+)$', views.problem, name="problem"),
-    url(r'^delete/(?P<id>\d+)$', views.delete_problem),
+    url(r'^problem/(?P<pid>\d+)$', views.problem, name="problem"),
+    url(r'^delete/(?P<pid>\d+)$', views.delete_problem),
 
     url(r'^add_solution/(?P<pid>\d+)$', views.add_solution),
     url(r'^delete_solution/(?P<sid>\d+)/(?P<pid>\d+)$', views.delete_solution),

@@ -173,16 +173,16 @@ def add_problem(request):
             return redirect('problem', id=new_problem[1].id)
     return redirect('/')
 
-def delete_problem(request, id):
+def delete_problem(request, pid):
     if "id" in request.session:
         user = User.objects.get(id=request.session['id'])
-        Problem.objects.get(id=id).delete()
+        Problem.objects.get(id=pid).delete()
         return redirect('/all')
     return redirect('/')
 
-def problem(request, id):
+def problem(request, pid):
     if "id" in request.session:
-        problem = Problem.objects.get(id=id)
+        problem = Problem.objects.get(id=pid)
         user = User.objects.get(id=request.session['id'])
         solutions = Solution.objects.filter(user=user, problem=problem)
 
@@ -200,13 +200,13 @@ def add_solution(request, pid):
         if solution[0] == False:
             for error in solution[1]:
                 messages.add_message(request, messages.INFO, error)
-        return redirect('problem', id=pid)
+        return redirect('problem', pid=pid)
     return redirect('/')
 
 def delete_solution(request, sid, pid):
     if "id" in request.session:
         Solution.objects.get(id=sid).delete()
-        return redirect('problem', id=pid)
+        return redirect('problem', pid=pid)
     return redirect('/')
 
 
