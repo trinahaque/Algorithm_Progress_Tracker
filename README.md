@@ -15,8 +15,7 @@ source djangoEnv/bin/activate
 pip install django
 ```
 4. Create another folder in a different location and clone this git repository in that folder
-Navigate to DSA_Progress_Tracker by typing > cd DSA_Progress_Tracker
-and locate manage.py in the directory The correct location will look something like this:
+Navigate to DSA_Progress_Tracker and locate manage.py in the directory The correct location will look something like this:
 ```
 README.md	apps		db.sqlite3	manage.py	registration
 ```
