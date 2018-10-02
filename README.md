@@ -19,8 +19,12 @@ Navigate to DSA_Progress_Tracker and locate manage.py in the directory The corre
 ```
 README.md	apps		db.sqlite3	manage.py	registration
 ```
-5. Run this command in the terminal: python2.7 manage.py runserver
-6. Type in http://localhost:8000 in the browser
+5. Then install bcrypt by typing the command below in the terminal
+```
+pip install bcrypt
+```
+6. Run this command in the terminal: python2.7 manage.py runserver
+7. Type in http://localhost:8000 in the browser
 
 # Python 2.7 Installation
 If Python 2.7 is not installed in the machine, it can be downloaded from here: https://www.python.org/downloads/
